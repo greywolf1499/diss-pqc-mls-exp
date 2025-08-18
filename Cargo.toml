@@ -1,0 +1,14 @@
+[package]
+name = "mls_artifact_sizing"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+csv = "1.3.1"
+openmls = { path = "../pqc-openmls/openmls" }
+openmls_basic_credential = { path = "../pqc-openmls/basic_credential" }
+openmls_rust_crypto = { path = "../pqc-openmls/openmls_rust_crypto" }
+openmls_pqc_crypto = { path = "../pqc-openmls/openmls_pqc_crypto" }
+openmls_traits = { path = "../pqc-openmls/traits" }
+serde_json = "1.0.142"
+clap = { version = "4.5.45", features = ["derive","unstable-doc"] }
