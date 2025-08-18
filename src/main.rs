@@ -355,14 +355,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // A selection of ciphersuites including classical and PQC signature schemes.
     let ciphersuites_to_test = vec![
+        // Classical
         Ciphersuite::MLS_128_DHKEMX25519_AES128GCM_SHA256_Ed25519,
+        // NIST Level 1
         Ciphersuite::MLS_128_DHKEMX25519_AES128GCM_SHA256_MLDSA44,
         Ciphersuite::MLS_128_DHKEMX25519_AES128GCM_SHA256_SPHINCS_SHA_128F,
         Ciphersuite::MLS_128_DHKEMX25519_AES128GCM_SHA256_SPHINCS_SHA_128S,
         Ciphersuite::MLS_128_DHKEMX25519_AES128GCM_SHA256_FALCON_512,
+        // NIST Level 3
         Ciphersuite::MLS_128_DHKEMX25519_AES128GCM_SHA256_MLDSA65,
         Ciphersuite::MLS_128_DHKEMX25519_AES128GCM_SHA256_SPHINCS_SHA_192F,
         Ciphersuite::MLS_128_DHKEMX25519_AES128GCM_SHA256_SPHINCS_SHA_192S,
+        // NIST Level 5
         Ciphersuite::MLS_128_DHKEMX25519_AES128GCM_SHA256_MLDSA87,
         Ciphersuite::MLS_128_DHKEMX25519_AES128GCM_SHA256_SPHINCS_SHA_256F,
         Ciphersuite::MLS_128_DHKEMX25519_AES128GCM_SHA256_SPHINCS_SHA_256S,
