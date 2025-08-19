@@ -79,6 +79,7 @@ struct Measurement {
     commit_size_bytes: usize,
     welcome_size_bytes: usize,
     key_package_size_bytes: usize,
+    message_size_bytes: usize,
 }
 
 impl Measurement {
@@ -93,6 +94,7 @@ impl Measurement {
             self.commit_size_bytes.to_string(),
             self.welcome_size_bytes.to_string(),
             self.key_package_size_bytes.to_string(),
+            self.message_size_bytes.to_string(),
             self.ratchet_tree_extension.to_string(),
             format!("{:?}", self.ciphersuite.signature_algorithm()),
         ])?;
@@ -183,6 +185,7 @@ where
             commit_size_bytes: commit.tls_serialized_len(),
             welcome_size_bytes: welcome.tls_serialized_len(),
             key_package_size_bytes: 0,
+            message_size_bytes: 0,
         };
         println!(
             "  -> Measuring at group size: {}. Commit: {} B, Welcome: {} B",
@@ -235,6 +238,7 @@ where
             commit_size_bytes: commit_size,
             welcome_size_bytes: 0,
             key_package_size_bytes: 0,
+            message_size_bytes: 0,
         }
         .write_to_csv(writer)?;
     }
@@ -286,9 +290,51 @@ where
             commit_size_bytes: commit_size,
             welcome_size_bytes: 0,
             key_package_size_bytes: 0,
+            message_size_bytes: 0,
         }
         .write_to_csv(writer)?;
     }
+    Ok(())
+}
+
+// Measures the size of an application message.
+//
+// Note: The `ratchet_tree_extension` and group size does not affect the size of application messages.
+fn run_application_message_size_experiment<P: OpenMlsProvider>(
+    writer: &mut csv::Writer<File>,
+    ciphersuite: Ciphersuite,
+    provider: &P,
+) -> Result<(), Box<dyn std::error::Error>>
+where
+    P::StorageError: 'static,
+{
+    println!(
+        "\n--- Running APPLICATION MESSAGE Measurement: Ciphersuite={:?} ---",
+        ciphersuite.signature_algorithm()
+    );
+    // SETUP: Create a group with the specified size.
+    let (mut alice_group, alice_signer) = build_group_to_size(2, ciphersuite, provider, false)?;
+    let message_payload = b"This is a test message.";
+    // TIMED: The cost of deriving the key and encrypting the message.
+    let application_message = alice_group
+        .create_message(provider, &alice_signer, message_payload)
+        .expect("Error creating application message.");
+    let message_size = application_message.tls_serialized_len();
+    println!(
+        "  -> Measuring at group size: {}. Message Size: {} B",
+        2, message_size
+    );
+    let measurement = Measurement {
+        operation: "application_message".to_string(),
+        group_size: 2,
+        ciphersuite,
+        ratchet_tree_extension: false,
+        commit_size_bytes: 0,
+        welcome_size_bytes: 0,
+        message_size_bytes: message_size,
+        key_package_size_bytes: 0,
+    };
+    measurement.write_to_csv(writer)?;
     Ok(())
 }
 
@@ -318,6 +364,7 @@ where
         ratchet_tree_extension: false, // Not applicable.
         commit_size_bytes: 0,
         welcome_size_bytes: 0,
+        message_size_bytes: 0,
         key_package_size_bytes: kp_bundle.key_package().tls_serialized_len(),
     };
     println!(
@@ -381,6 +428,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "commit_message_size_bytes",
         "welcome_message_size_bytes",
         "key_package_size_bytes",
+        "message_size_bytes",
         "ratchet_tree_extension_enabled",
         "ciphersuite",
     ])?;
@@ -409,6 +457,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             provider,
             &args.group_sizes,
         )?;
+        // For 'application message' size, we run a single experiment.
+        run_application_message_size_experiment(&mut writer, ciphersuite, provider)?;
     }
 
     writer.flush()?;
