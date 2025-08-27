@@ -32,7 +32,7 @@ This experiment quantifies the impact of PQC on the size of MLS protocol message
 -   **Operations Measured**: `KeyPackage` generation, adding/removing members, self-updates, and application messages.
 -   **Location**: `mls-artifact-size/`
 
-For detailed instructions on how to run the sizing experiments, please refer to the `mls-artifact-size/Readme.md` file.
+For detailed instructions on how to run the sizing experiments, please refer to the `mls-artifact-size/Readme.md` file, or [click here](mls-artifact-size).
 
 ### 3. PQC-Integrated OpenMLS Performance Benchmarks
 
@@ -43,7 +43,7 @@ This is the central experiment of the dissertation, analyzing the real-world per
 -   **Operations Benchmarked**: Group creation, member addition (from sender and receiver perspectives), self-updates, member removal, and application messaging.
 -   **Location**: `pqc-openmls/`
 
-The benchmark suite is highly configurable, allowing for tests across different ciphersuites and group sizes. For detailed instructions on running the benchmarks, please see the `pqc-openmls/openmls/benches/Readme.md` file.
+The benchmark suite is highly configurable, allowing for tests across different ciphersuites and group sizes. For detailed instructions on running the benchmarks, please see the `pqc-openmls/openmls/benches/Readme.md` file, or [click here](pqc-openmls/openmls/benches).
 
 ## How to Use This Repository
 
