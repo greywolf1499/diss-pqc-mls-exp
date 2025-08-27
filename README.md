@@ -22,7 +22,7 @@ This experiment establishes a baseline understanding of the performance characte
 -   **Algorithms Benchmarked**: Includes classical schemes like `Ed25519` and PQC schemes from the NIST PQC standardization process such as `ML-DSA`, `FALCON`, and `SPHINCS+` at various security levels.
 -   **Location**: `pqc-primitive-bench/`
 
-For detailed instructions on how to run these benchmarks, please refer to the `pqc-primitive-bench/Readme.md` file, or [click here](pqc-primitive-bench/Readme.md).
+For detailed instructions on how to run these benchmarks, please refer to the `pqc-primitive-bench/Readme.md` file, or [click here](pqc-primitive-bench).
 
 ### 2. MLS Artifact Size Measurement
 
