@@ -45,6 +45,12 @@ This is the central experiment of the dissertation, analyzing the real-world per
 
 The benchmark suite is highly configurable, allowing for tests across different ciphersuites and group sizes. For detailed instructions on running the benchmarks, please see the `pqc-openmls/openmls/benches/Readme.md` file, or [click here](pqc-openmls/openmls/benches).
 
+## Generated Dataset
+
+The complete dataset generated from all experiments, including raw performance numbers, artifact sizes, and processed datasets, is available for download and further analysis. This dataset is hosted at:
+
+[Warwick SharePoint](https://livewarwickac-my.sharepoint.com/:u:/g/personal/u5665685_live_warwick_ac_uk/EaZdFotCR0FGhwxF2__j6swBR2Jm8H8wUtLIFaN1NVufAw?e=WaLYJS)
+
 ## How to Use This Repository
 
 To replicate the experiments, navigate to the directory of the experiment you are interested in and follow the instructions in its respective `README.md` file. Each experiment is self-contained with its own dependencies and runner scripts.
